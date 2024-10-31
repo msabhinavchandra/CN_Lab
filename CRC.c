@@ -16,20 +16,15 @@ Data received: 11100011No error detected
 #include <stdio.h>
 #include <string.h>
 
-void xor
-    (char *dividend, char *divisor, int divisor_len)
+void xor(char *dividend, char *divisor, int divisor_len){
 
-{
-  for (int i = 0; i < divisor_len; i++)
-
-  {
+  for (int i = 0; i < divisor_len; i++){
     dividend[i] = (dividend[i] == divisor[i]) ? '0' : '1';
   }
+
 }
 
-    void crc_encode(char *data, char *polynomial, char *remainder, bool flag)
-
-{
+void crc_encode(char *data, char *polynomial, char *remainder, bool flag){
   int data_len = strlen(data);
   int poly_len = strlen(polynomial);
 
@@ -37,23 +32,17 @@ void xor
   strcpy(temp, data);
 
   // Pad the data with n-1 zeros
-  for (int i = data_len; i < data_len + poly_len - 1; i++)
-
-  {
+  for (int i = data_len; i < data_len + poly_len - 1; i++){
     temp[i] = '0';
   }
   temp[data_len + poly_len - 1] = '\0';
 
-  if (flag)
-
-  {
+  if (flag){
     printf("Data padded with n-1 zeros: %s", temp);
   }
 
   // Perform the division process
-  for (int i = 0; i <= data_len - 1; i++)
-
-  {
+  for (int i = 0; i <= data_len - 1; i++){
     if (temp[i] == '1')
 
     {
@@ -91,14 +80,10 @@ int main()
   flag = false;
   crc_encode(received_data, polynomial, remainder_check, flag);
 
-  if (strchr(remainder_check, '1') == NULL)
-
-  {
+  if (strchr(remainder_check, '1') == NULL){
     printf("No error detected\n");
 
-  } else
-
-  {
+  } else{
     printf("Error detected in the received data\n");
   }
 
