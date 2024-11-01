@@ -17,7 +17,7 @@ Data received: 11100011No error detected
 #include <string.h>
 
 void xor(char *dividend, char *divisor, int divisor_len){
-
+// printf("XOR Func Called for dividend %s and divisor %s and dividor length %d",dividend,divisor,divisor_len);
   for (int i = 0; i < divisor_len; i++){
     dividend[i] = (dividend[i] == divisor[i]) ? '0' : '1';
   }
