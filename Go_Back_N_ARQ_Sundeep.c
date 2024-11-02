@@ -6,7 +6,7 @@ Sample
 #include<stdio.h>
 int main()
 {
-               int window=0;
+    int window=0;
 	printf("enter Window size : ");
 	scanf("%d",&window);
 	int sent,ack,i=0;
