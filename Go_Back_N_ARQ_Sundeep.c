@@ -1,4 +1,4 @@
-/*Develop a simple data link layer that performs the flow control using the Go Back N protocol in   “c”
+/*Develop a simple data link layer that performs the flow control using the Go Back N protocol in “c”
 
 Sample
 
