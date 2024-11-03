@@ -25,6 +25,7 @@ int main(){
 	}
 	if(f%n!=0){
 	printf("Acknowledgement of above frames sent is received by sender\n");
-
 	}
+	printf("All fames Successfully Transmitted.");
+
 }
