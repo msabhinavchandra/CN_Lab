@@ -12,7 +12,7 @@ Data received: 11100011No error detected
 
 */
 
-#include <stdbool.h>
+
 #include <stdio.h>
 #include <string.h>
 
@@ -24,53 +24,50 @@ printf("XOR Func Called for dividend %s and divisor %s and dividor length %d\n",
 
 }
 
-void crc_encode(char *data, char *polynomial, char *remainder, bool flag){
+void crc_encode(char *data, char *divisor, char *remainder){
   int data_len = strlen(data);
-  int poly_len = strlen(polynomial);
-
-  char temp[data_len + poly_len - 1];
+  int divisor_Len = strlen(divisor);
+  int tempLength=data_len + divisor_Len - 1;
+  char temp[tempLength];
   strcpy(temp, data);
 
   // Pad the data with n-1 zeros
-  for (int i = data_len; i < data_len + poly_len - 1; i++){
+  for (int i = data_len; i < tempLength; i++){
     temp[i] = '0';
   }
-  temp[data_len + poly_len - 1] = '\0';
+  temp[tempLength] = '\0';
 
-  if (flag){
-    printf("Data padded with n-1 zeros: %s\n", temp);
-  }
+  printf("Data padded with n-1 zeros: %s\n", temp);
 
   // Perform the division process
   for (int i = 0; i <= data_len - 1; i++){
     if (temp[i] == '1'){
-      xor(temp + i, polynomial, poly_len);
+      xor(temp + i, divisor, divisor_Len);
     }
   }
 
-  strncpy(remainder, temp + data_len, poly_len - 1);//divisor_length -1.
-  remainder[poly_len - 1] = '\0';//0-based indexing. setting the last char as
+  strncpy(remainder, temp + data_len, divisor_Len - 1);//divisor_length -1.
+  remainder[divisor_Len - 1] = '\0';//0-based indexing. setting the last char as
   //end of string.
 }
 
-void crc_encodeR(char *data, char *polynomial, char *remainder, int data_len){
-  int poly_len = strlen(polynomial);
+void crc_encodeR(char *data, char *divisor, char *remainder, int data_len){
+  int divisor_Len = strlen(divisor);
 
   // Perform the division process
   for (int i = 0; i <= data_len - 1; i++){
     if (data[i] == '1'){
-      xor(data + i, polynomial, poly_len);
+      xor(data + i, divisor, divisor_Len);
     }
   }
 
-  strncpy(remainder, data + data_len, poly_len - 1);//divisor_length -1.
-  remainder[poly_len - 1] = '\0';//0-based indexing. setting the last char as
+  strncpy(remainder, data + data_len, divisor_Len - 1);//divisor_length -1.
+  remainder[divisor_Len - 1] = '\0';//0-based indexing. setting the last char as
   //end of string.
 }
 
-int main()
-
-{
+int main(){
+  
   char data[100], polynomial[100], received_data[100];
   char remainder[100], remainder_check[100];
 
@@ -79,8 +76,7 @@ int main()
   printf("Enter the Generating polynomial: ");
   scanf("%s", polynomial);
 
-  bool flag = true;
-  crc_encode(data, polynomial, remainder, flag);
+  crc_encode(data, polynomial, remainder);
   printf("CRC or Check value is: %s\n", remainder);
 
   strcat(data, remainder);
@@ -91,7 +87,7 @@ int main()
 
   printf("Data received: %s\n", received_data);
 
-  flag = false;
+  
   crc_encodeR(received_data, polynomial, remainder_check, strlen(data));
 
   if (strchr(remainder_check, '1') == NULL){
